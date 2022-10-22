@@ -1,7 +1,7 @@
 package com.example.desafio.product;
 
 import com.example.desafio.category.Category;
-import lombok.*;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -73,6 +73,10 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getCategory(){
+        return category.getName();
     }
 
     @Override

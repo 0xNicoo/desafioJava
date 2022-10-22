@@ -9,7 +9,7 @@ public class ProductMapper {
 
     public static Product createProduct(ProductDto productDto, Category category){
         Product product = new Product();
-        if (productDto.getName() == null || productDto.getName().length() > 0){
+        if (productDto.getName() == null || productDto.getName().length() == 0){
             throw new IllegalStateException("Invalid product name");
         }
         if (productDto.getPrice() == null || productDto.getPrice().compareTo(BigDecimal.ZERO) < 0){

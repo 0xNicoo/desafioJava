@@ -1,10 +1,10 @@
 package com.example.desafio.category;
 
 import com.example.desafio.product.Product;
-import lombok.*;
+
 
 import javax.persistence.*;
-import java.util.List;
+
 import java.util.Set;
 
 

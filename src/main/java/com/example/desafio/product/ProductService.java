@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+
 
 @Service
 public class ProductService {
@@ -22,8 +23,31 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public List<Product> getAllProducts(String name, String price, String stock, String category){
+        List<Product> productList = productRepository.findAll();
+
+        if(name == null && price == null && stock == null && category == null){
+            return productList;
+        }else{
+            List<Product> auxList = new ArrayList<Product>(productList);
+
+            productList.forEach(p ->{
+                if(name != null && !Objects.equals(p.getName(), name)){
+                    auxList.remove(p);
+                }
+                if(price != null && p.getPrice().compareTo(new BigDecimal(price)) != 0){
+                    auxList.remove(p);
+                }
+                if(stock != null && p.getStock() != Integer.parseInt(stock)){
+                    auxList.remove(p);
+                }
+                if(category != null && !Objects.equals(p.getCategory(), category)){
+                    auxList.remove(p);
+                }
+            });
+
+            return auxList;
+        }
     }
 
     public Product getProduct(Integer productId){
@@ -50,25 +74,28 @@ public class ProductService {
 
     @Transactional
     public void  updateProduct(Integer productId, String name, String price, String stock, String categoryId){
-
         Product product = productRepository
                 .findById(productId)
-                .orElseThrow(() -> new IllegalStateException("Product with id " + productId +"don't exist"));
-        Category category = categoryRepository
-                .findById(Integer.parseInt(categoryId))
-                .orElseThrow(() -> new IllegalStateException("Category with id " + categoryId + "don't exist"));
+                .orElseThrow(() -> new IllegalStateException("Product with id " + productId +" don't exist"));
 
-        if (name != null && name.length() > 0 && !Objects.equals(product.getName(), name)){
+        if(categoryId != null){
+            Category category = categoryRepository
+                    .findById(Integer.parseInt(categoryId))
+                    .orElseThrow(() -> new IllegalStateException("Category with id " + categoryId + " don't exist"));
+            if(!Objects.equals(category.getId(), categoryId)){
+                product.setCategory(category);
+            }
+        }
+
+        if (name != null && name.length() > 0){
             product.setName(name);
         }
-        if (price != null && !Objects.equals(product.getPrice(), price)){
+        if (price != null){
             product.setPrice(new BigDecimal(price));
         }
-        if (stock != null && Integer.parseInt(stock) >= 0 && !Objects.equals(product.getStock(), stock)){
+        if (stock != null && Integer.parseInt(stock) >= 0){
             product.setStock(Integer.parseInt(stock));
         }
-        if(!Objects.equals(category.getId(), categoryId)){
-            product.setCategory(category);
-        }
+
     }
 }

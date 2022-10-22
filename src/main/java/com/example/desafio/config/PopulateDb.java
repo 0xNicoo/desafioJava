@@ -22,8 +22,12 @@ public class PopulateDb {
             Category cocina = new Category("Cocina", Collections.emptySet());
             categoryRepository.saveAllAndFlush(List.of(limpieza,cocina));
             Optional<Category> c = categoryRepository.findCategoryByName("Cocina");
+            Optional<Category> l = categoryRepository.findCategoryByName("Limpieza");
             Product product = new Product("Aceite", new BigDecimal(200), 23, c.get());
-            productRepository.save(product);
+            Product product2 = new Product("Mayonesa", new BigDecimal(200), 55, c.get());
+            Product product3 = new Product("Lavandina", new BigDecimal(300), 23, l.get());
+            Product product4 = new Product("Escoba", new BigDecimal(200), 55, l.get());
+            productRepository.saveAll(List.of(product,product2,product3,product4));
         };
     }
 }

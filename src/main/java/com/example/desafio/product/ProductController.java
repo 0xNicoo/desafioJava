@@ -16,8 +16,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProduct(){
-        return productService.getAllProducts();
+    public List<Product> getAllProduct(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String price,
+            @RequestParam(required = false) String stock,
+            @RequestParam(required = false) String category
+    ){
+        return productService.getAllProducts(name, price, stock, category);
     }
 
     @GetMapping(path = "/{productId}")
