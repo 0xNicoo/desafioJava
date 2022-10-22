@@ -1,20 +1,14 @@
 package com.example.desafio.category;
 
 import com.example.desafio.product.Product;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+
 @Entity
 @Table(name = "CATEGORY")
 public class Category {
@@ -24,12 +18,51 @@ public class Category {
     private Integer id;
     private String name;
 
+
     @OneToMany(mappedBy = "category")
     private Set<Product> products;
+
+    public Category() {
+    }
 
     public Category(String name, Set<Product> products) {
         this.name = name;
         this.products = products;
+    }
+
+    public Category(Integer id, String name, Set<Product> products) {
+        this.id = id;
+        this.name = name;
+        this.products = products;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
     }
 
 }

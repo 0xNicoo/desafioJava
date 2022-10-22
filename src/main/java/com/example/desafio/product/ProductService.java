@@ -33,15 +33,10 @@ public class ProductService {
     }
 
     public void createProduct(ProductDto productDto){
-        Optional<Category> category = categoryRepository.findById(productDto.getCategoryId());
-        if(category.isEmpty()){
-            throw new IllegalStateException("Category with id "+ productDto.getCategoryId() +" don't exist");
-        }
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setStock(productDto.getStock());
-        product.setCategory(category.get());
+        Category category = categoryRepository
+                .findById(productDto.getCategoryId())
+                .orElseThrow(() -> new IllegalStateException("Invalid category"));
+        Product product = ProductMapper.createProduct(productDto, category);
         productRepository.save(product);
     }
 
@@ -55,8 +50,14 @@ public class ProductService {
 
     @Transactional
     public void  updateProduct(Integer productId, String name, String price, String stock, String categoryId){
-        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalStateException("Product with id " + productId +"don't exist"));
-        Category category = categoryRepository.findById(Integer.parseInt(categoryId)).orElseThrow(() -> new IllegalStateException("Category with id " + categoryId + "don't exist"));
+
+        Product product = productRepository
+                .findById(productId)
+                .orElseThrow(() -> new IllegalStateException("Product with id " + productId +"don't exist"));
+        Category category = categoryRepository
+                .findById(Integer.parseInt(categoryId))
+                .orElseThrow(() -> new IllegalStateException("Category with id " + categoryId + "don't exist"));
+
         if (name != null && name.length() > 0 && !Objects.equals(product.getName(), name)){
             product.setName(name);
         }
