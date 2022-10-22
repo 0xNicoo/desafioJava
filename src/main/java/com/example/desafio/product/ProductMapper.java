@@ -1,6 +1,7 @@
 package com.example.desafio.product;
 
 import com.example.desafio.category.Category;
+import com.example.desafio.exception.ApiRequestException;
 
 import java.math.BigDecimal;
 
@@ -10,13 +11,13 @@ public class ProductMapper {
     public static Product createProduct(ProductDto productDto, Category category){
         Product product = new Product();
         if (productDto.getName() == null || productDto.getName().length() == 0){
-            throw new IllegalStateException("Invalid product name");
+            throw new ApiRequestException("Invalid product name");
         }
         if (productDto.getPrice() == null || productDto.getPrice().compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalStateException("Invalid price");
+            throw new ApiRequestException("Invalid price");
         }
         if (productDto.getStock() == null){
-            throw new IllegalStateException("Invalid stock");
+            throw new ApiRequestException("Invalid stock");
         }
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());

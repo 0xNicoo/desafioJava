@@ -2,6 +2,7 @@ package com.example.desafio.product;
 
 import com.example.desafio.category.Category;
 import com.example.desafio.category.CategoryRepository;
+import com.example.desafio.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,13 +54,13 @@ public class ProductService {
     public Product getProduct(Integer productId){
         return productRepository
                 .findById(productId)
-                .orElseThrow(() -> new IllegalStateException("Product with id: "+ productId+ " don't exist"));
+                .orElseThrow(() -> new ApiRequestException("Product with id: "+ productId+ " don't exist"));
     }
 
     public void createProduct(ProductDto productDto){
         Category category = categoryRepository
                 .findById(productDto.getCategoryId())
-                .orElseThrow(() -> new IllegalStateException("Invalid category"));
+                .orElseThrow(() -> new ApiRequestException("Invalid category"));
         Product product = ProductMapper.createProduct(productDto, category);
         productRepository.save(product);
     }
@@ -67,7 +68,7 @@ public class ProductService {
     public void deleteProduct(Integer productId){
         boolean exists = productRepository.existsById(productId);
         if(!exists){
-            throw new IllegalStateException("Product with id: "+ productId +" don't exist");
+            throw new ApiRequestException("Product with id: "+ productId +" don't exist");
         }
         productRepository.deleteById(productId);
     }
@@ -76,12 +77,12 @@ public class ProductService {
     public void  updateProduct(Integer productId, String name, String price, String stock, String categoryId){
         Product product = productRepository
                 .findById(productId)
-                .orElseThrow(() -> new IllegalStateException("Product with id " + productId +" don't exist"));
+                .orElseThrow(() -> new ApiRequestException("Product with id " + productId +" don't exist"));
 
         if(categoryId != null){
             Category category = categoryRepository
                     .findById(Integer.parseInt(categoryId))
-                    .orElseThrow(() -> new IllegalStateException("Category with id " + categoryId + " don't exist"));
+                    .orElseThrow(() -> new ApiRequestException("Category with id " + categoryId + " don't exist"));
             if(!Objects.equals(category.getId(), categoryId)){
                 product.setCategory(category);
             }
