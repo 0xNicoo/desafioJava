@@ -1,8 +1,12 @@
-package com.example.desafio.product;
+package com.example.desafio.service;
 
-import com.example.desafio.category.Category;
-import com.example.desafio.category.CategoryRepository;
+import com.example.desafio.model.Category;
+import com.example.desafio.repository.CategoryRepository;
 import com.example.desafio.exception.ApiRequestException;
+import com.example.desafio.model.Product;
+import com.example.desafio.product.ProductDto;
+import com.example.desafio.product.ProductMapper;
+import com.example.desafio.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

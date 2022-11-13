@@ -1,9 +1,9 @@
 package com.example.desafio.config;
 
-import com.example.desafio.category.Category;
-import com.example.desafio.category.CategoryRepository;
-import com.example.desafio.product.Product;
-import com.example.desafio.product.ProductRepository;
+import com.example.desafio.model.Category;
+import com.example.desafio.repository.CategoryRepository;
+import com.example.desafio.model.Product;
+import com.example.desafio.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

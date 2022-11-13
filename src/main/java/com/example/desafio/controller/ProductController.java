@@ -1,5 +1,8 @@
-package com.example.desafio.product;
+package com.example.desafio.controller;
 
+import com.example.desafio.model.Product;
+import com.example.desafio.product.ProductDto;
+import com.example.desafio.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

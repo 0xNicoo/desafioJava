@@ -1,5 +1,7 @@
-package com.example.desafio.category;
+package com.example.desafio.controller;
 
+import com.example.desafio.service.CategoryService;
+import com.example.desafio.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

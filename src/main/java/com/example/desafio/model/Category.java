@@ -1,6 +1,6 @@
-package com.example.desafio.category;
+package com.example.desafio.model;
 
-import com.example.desafio.product.Product;
+import com.example.desafio.model.Product;
 
 
 import javax.persistence.*;

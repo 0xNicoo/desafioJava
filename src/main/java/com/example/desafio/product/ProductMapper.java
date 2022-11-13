@@ -1,7 +1,8 @@
 package com.example.desafio.product;
 
-import com.example.desafio.category.Category;
+import com.example.desafio.model.Category;
 import com.example.desafio.exception.ApiRequestException;
+import com.example.desafio.model.Product;
 
 import java.math.BigDecimal;
 
